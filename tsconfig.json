@@ -1,0 +1,66 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        // ↓启用所有严格类型检查选项
+        "strict": true,
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        // ↓启用实验性的ES装饰器
+        "experimentalDecorators": true,
+        // ↓允许从没有设置默认导出的模块中默认导入。这并不影响代码的输出，仅为了类型检查
+        "allowSyntheticDefaultImports": true,
+        // ↓禁用函数参数双向协变检查
+        "strictFunctionTypes": false,
+        // ↓允许编译javascript文件
+        "allowJs": true,
+        // ↓指定ECMAScript目标版本，esnext为最新版本
+        "target": "esnext",
+        // ↓生成相应的 .map文件
+        "sourceMap": true,
+        // ↓若有未使用的局部变量则抛错
+        "noUnusedLocals": true,
+        // ↓若有未使用的参数则抛错。
+        "noUnusedParameters": true,
+        // ↓要包含的类型声明文件路径列表
+        "typeRoots": ["./node_modules/@types/", "./types"],
+        "outDir": "./dist",
+        // ↓解析非相对模块名的基准目录。查看 模块解析文档了解详情
+        "baseUrl": "./",
+        // ↓模块名到基于 baseUrl的路径映射的列表。查看 模块解析文档了解详情
+        "paths": {
+            "/@/*": ["src/*"],
+            "/#/*": ["types/*"]
+        },
+        // 避免出现incremental mode is not yet support错误
+        "incremental": false,
+        // ↓忽略所有的声明文件（ *.d.ts）的类型检查。
+        "skipLibCheck": true,
+        // ↓对 null 类型检查，设置为 false 就不会报错了
+        "strictNullChecks": false,
+        // ↓在表达式和声明上有隐含的 any类型时报错。
+        "noImplicitAny": false,
+        "strictBindCallApply": false,
+        // ↓禁止对同一个文件的不一致的引用
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": false
+    },
+    // ↓指定一个匹配列表（属于自动指定该路径下的所有ts相关文件）
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.d.ts",
+        "src/**/*.tsx",
+        "src/**/*.vue",
+        "types/**/*.d.ts",
+        "types/**/*.ts",
+        "build/**/*.ts",
+        "build/**/*.d.ts",
+        "mock/**/*.ts",
+        "tests/**/*.ts",
+        "tests/**/*.tsx",
+        "mock/**/*.ts",
+        "./jest.config.js"
+    ],
+    // 指定一个排除列表（include的反向操作）
+    "exclude": ["node_modules", "tests/server/**/*.ts", "dist", "**/*.js"]
+}
