@@ -12,5 +12,9 @@ dist
 .local
 /bin
 Dockerfile
-jest.config.js
-commitlint.config.js
+
+# other file
+jest.config.jest
+
+# other folder
+/config

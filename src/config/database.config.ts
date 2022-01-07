@@ -1,9 +1,15 @@
-export default {
-    type: process.env.DB_TYPE,
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    database: process.env.DB_DATABASE,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    logging: true
+import * as config from 'config'
+
+import { databaseType } from './types.d'
+
+const database = config.get('server').database
+
+export const DatabaseConfig: databaseType = {
+    dialect: database.dialect,
+    host: database.host,
+    port: parseInt(database.port, 10) || 3306,
+    database: database.database,
+    username: database.username,
+    password: database.password,
+    connectionLimit: database.connectionLimit
 }
