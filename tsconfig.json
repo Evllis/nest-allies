@@ -24,6 +24,7 @@
         "noUnusedParameters": true,
         // ↓要包含的类型声明文件路径列表
         "typeRoots": ["./node_modules/@types/", "./types"],
+        "esModuleInterop": true,
         "outDir": "./dist",
         // ↓解析非相对模块名的基准目录。查看 模块解析文档了解详情
         "baseUrl": "./",

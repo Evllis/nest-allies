@@ -1,4 +1,4 @@
-import * as config from 'config'
+const config = require('config')
 
 import { databaseType } from './types.d'
 
