@@ -1,0 +1,14 @@
+{
+    "server": {
+        "PORT": 4000,
+        "database": {
+            "dialect": "mariadb",
+            "host": "localhost",
+            "prot": 3006,
+            "database": "nest_allies",
+            "username": "root",
+            "password": "root",
+            "connectionLimit": 10
+        }
+    }
+}

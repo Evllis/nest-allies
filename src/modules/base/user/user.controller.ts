@@ -1,5 +1,5 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
+import { Controller, Post, Body /* UseGuards */ } from '@nestjs/common'
+// import { AuthGuard } from '@nestjs/passport'
 import { UserService } from './user.service'
 import { AuthService } from '/@/modules/common/auth/auth.service'
 
@@ -16,7 +16,7 @@ export class UserController {
      * JWT验证 - Step 1: 用户请求登录
      */
     // 使用JWT进行验证
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     @Post('login')
     async login(@Body() loginParams: any) {
         console.log(`JWT验证 - Step 1: 用户请求登录`)
