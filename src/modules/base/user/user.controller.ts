@@ -1,5 +1,5 @@
-import { Controller, Post, Body /* UseGuards */ } from '@nestjs/common'
-// import { AuthGuard } from '@nestjs/passport'
+import { Controller, Post, Body, UseGuards } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { UserService } from './user.service'
 import { AuthService } from '/@/modules/common/auth/auth.service'
 
@@ -37,6 +37,8 @@ export class UserController {
         }
     }
 
+    // 使用JWT进行验证
+    @UseGuards(AuthGuard('jwt'))
     @Post('register')
     async register(@Body() body: any) {
         return await this.userService.register(body)
