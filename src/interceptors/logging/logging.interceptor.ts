@@ -1,11 +1,12 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor, Logger } from '@nestjs/common'
-import { LoggerService } from '/@/modules/shared/services/logger/logger.service'
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
+// import { LoggerService } from '/@/modules/shared/services/logger/logger.service'
 import { Observable } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
+import { Logger } from '/@/utils/log4js'
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
-    private logger = new LoggerService(LoggingInterceptor.name)
+    // private logger = new LoggerService(LoggingInterceptor.name)
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         const request = context.switchToHttp().getRequest()
@@ -36,7 +37,8 @@ export class LoggingInterceptor implements NestInterceptor {
                     query,
                     data
                 }
-                this.logger.info(message, '中间件记录日志')
+                Logger.info(message, '中间件记录日志')
+                // this.logger.info(message, '中间件记录日志')
                 return data
             })
         )

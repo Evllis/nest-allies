@@ -26,7 +26,7 @@ export class UserService {
                 await sequelize.query(sql, {
                     type: Sequelize.QueryTypes.SELECT, // 查询方式
                     raw: true, // 是否使用数组的方式展示结果
-                    logging: true // 是否将SQL语句打印到控制台
+                    logging: false // 是否将SQL语句打印到控制台
                 })
             )[0]
             return user
