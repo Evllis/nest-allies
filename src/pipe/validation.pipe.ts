@@ -1,7 +1,8 @@
-import { ArgumentMetadata, Injectable, PipeTransform, Logger, HttpException, HttpStatus } from '@nestjs/common'
+import { ArgumentMetadata, Injectable, PipeTransform, HttpException, HttpStatus } from '@nestjs/common'
 import { validate } from 'class-validator'
 import { plainToClass } from 'class-transformer'
 import { values } from 'lodash'
+import { Logger } from '/@/utils/log4js'
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
@@ -25,6 +26,7 @@ export class ValidationPipe implements PipeTransform<any> {
             // });
             //获取第一个错误并且返回
             const msg = values(errors[0].constraints)[0]
+            Logger.error(`Validation failed: ${msg}`)
             // 统一抛出异常
             throw new HttpException({ message: msg }, HttpStatus.OK)
         }
@@ -32,7 +34,7 @@ export class ValidationPipe implements PipeTransform<any> {
     }
 
     private toValidate(metatype: any): boolean {
-        const types = [String, Boolean, Number, Array, Object]
+        const types: any[] = [String, Boolean, Number, Array, Object]
         return !types.includes(metatype)
     }
 }

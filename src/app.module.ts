@@ -10,7 +10,7 @@ import { TransformInterceptor } from '/@/interceptors/transform/transform.interc
 /**
  * 管道
  */
-import { ValidationPipe } from '/@/pipe/validation/validation.pipe'
+import { ValidationPipe } from '/@/pipe/validation.pipe'
 
 /**
  * 过滤器
