@@ -16,6 +16,7 @@ import { ValidationPipe } from '/@/pipe/validation/validation.pipe'
  * 过滤器
  */
 import { HttpExceptionFilter } from '/@/filters/http-exception.filter' // 过滤处理 HTTP 异常
+import { AllExceptionsFilter } from '/@/filters/any-exception.filter'
 
 import { IndexModule } from './modules/index.module'
 
@@ -34,6 +35,10 @@ import { IndexModule } from './modules/index.module'
         {
             provide: APP_FILTER,
             useClass: HttpExceptionFilter
+        },
+        {
+            provide: APP_FILTER,
+            useClass: AllExceptionsFilter
         },
         // 全局使用管道(数据校验)
         {

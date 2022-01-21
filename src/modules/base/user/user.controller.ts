@@ -39,7 +39,7 @@ export class UserController {
 
     // 使用JWT进行验证
     @UseGuards(AuthGuard('jwt'))
-    @Post('register')
+    @Post('register1')
     async register(@Body() body: any) {
         return await this.userService.register(body)
     }
