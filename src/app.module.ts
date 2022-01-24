@@ -4,7 +4,7 @@ import { APP_INTERCEPTOR, APP_PIPE, APP_FILTER } from '@nestjs/core'
 /**
  * 拦截器
  */
-import { LoggingInterceptor } from '/@/interceptors/logging/logging.interceptor'
+// import { LoggingInterceptor } from '/@/interceptors/logging/logging.interceptor'
 import { TransformInterceptor } from '/@/interceptors/transform/transform.interceptor' // 使用拦截器打印出参
 
 /**
@@ -28,10 +28,10 @@ import { IndexModule } from './modules/index.module'
             provide: APP_INTERCEPTOR,
             useClass: TransformInterceptor
         },
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: LoggingInterceptor
-        },
+        // {
+        //     provide: APP_INTERCEPTOR,
+        //     useClass: LoggingInterceptor
+        // },
         {
             provide: APP_FILTER,
             useClass: HttpExceptionFilter

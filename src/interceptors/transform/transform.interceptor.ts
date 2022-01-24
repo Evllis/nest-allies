@@ -16,11 +16,11 @@ export class TransformInterceptor implements NestInterceptor {
                     Method: ${req.method}
                     IP: ${req.ip}
                     User: ${JSON.stringify(req.user)}
-                    Response data:\n ${JSON.stringify(data.data)}
+                    Response data: ${JSON.stringify(data)}
                 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 `
                 Logger.info(logFormat)
-                Logger.access(logFormat)
+                // Logger.access(logFormat)
                 return {
                     result: classToPlain(data),
                     code: 0,
