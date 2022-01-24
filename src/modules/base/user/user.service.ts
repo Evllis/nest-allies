@@ -40,7 +40,7 @@ export class UserService {
      * 注册用户
      */
     async register(requestBody: any): Promise<any> {
-        const { accountName, realName, password, repassword, mobile } = requestBody
+        const { accountName, realName, password, repassword, mobile, role = 3 } = requestBody
         if (password !== repassword) {
             return {
                 code: 400,
@@ -60,7 +60,7 @@ export class UserService {
             INSERT INTO admin_user
                 (account_name, real_name, passwd, passwd_salt, mobile, role, user_status, create_by)
             VALUES
-                ('${accountName}', '${realName}', '${hashPwd}', '${salt}', '${mobile}', 3, 1, 0)
+                ('${accountName}', '${realName}', '${hashPwd}', '${salt}', '${mobile}', '${role}', 1, 0)
         `
         try {
             await sequelize.query(registerSQL, {
