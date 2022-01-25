@@ -4,7 +4,7 @@ import { UserService } from './user.service'
 import { AuthService } from '/@/modules/common/auth/auth.service'
 import { ValidationPipe } from '/@/pipe/validation.pipe'
 import { RegisterInfo, LoginInfo } from './user.dto'
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger'
+import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger'
 
 // Swagger JWT验证
 @ApiBearerAuth()
@@ -19,14 +19,14 @@ export class UserController {
         return this.userService.findOne(body.username)
     }
 
-    /**
-     * JWT验证 - Step 1: 用户请求登录
-     */
     // 使用JWT进行验证
     // @UseGuards(AuthGuard('jwt'))
     @Post('login')
+    @ApiBody({
+        description: '用户登录',
+        type: LoginInfo
+    })
     async login(@Body() loginParams: LoginInfo) {
-        console.log(`JWT验证 - Step 1: 用户请求登录`)
         const authResult = await this.authService.validateUser(loginParams.username, loginParams.password)
         switch (authResult.code) {
             case 1:

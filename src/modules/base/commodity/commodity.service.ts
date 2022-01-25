@@ -103,7 +103,6 @@ export class CommodityService {
             WHERE
                 id = ${id}
         `
-        console.log(2222, updateCommoditySQL)
         // !TODO 加上后会修改失败, 以后再细查
         // const transaction = await sequelize.transaction()
         // await sequelize.query(updateCommoditySQL, { transaction, logging: false })

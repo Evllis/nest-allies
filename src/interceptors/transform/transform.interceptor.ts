@@ -1,7 +1,7 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { classToPlain } from 'class-transformer'
+// import { classToPlain } from 'class-transformer'
 import { Logger } from '/@/utils/log4js'
 
 @Injectable()
@@ -21,12 +21,12 @@ export class TransformInterceptor implements NestInterceptor {
                 `
                 Logger.info(logFormat)
                 // Logger.access(logFormat)
-                return {
-                    result: classToPlain(data),
-                    code: 0,
-                    message: '请求成功'
-                }
-                // return data
+                // return {
+                //     result: classToPlain(data),
+                //     code: 0,
+                //     message: '请求成功'
+                // }
+                return data
             })
         )
         // return next.handle().pipe(

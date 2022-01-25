@@ -20,5 +20,9 @@ export interface BaseType {
 }
 
 export interface RedisType {
+    port: number
+    host: string
+    db: number
+    password: string
     redisEXSecond: number
 }
