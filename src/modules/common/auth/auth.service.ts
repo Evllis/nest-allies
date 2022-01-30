@@ -46,7 +46,7 @@ export class AuthService {
      * JWT验证 - Step 3: 处理jwt签证
      */
     async certificate(user: any) {
-        const payload = { username: user.username, sub: user.userID, realName: user.realName, role: user.role }
+        const payload = { username: user.username, sub: user.userID, realname: user.realname, role: user.role }
         try {
             const token = this.jwtService.sign(payload)
             // 实例化 redis

@@ -16,7 +16,7 @@ async function bootstrap() {
     app.use(logger)
 
     // 全局路由前缀
-    app.setGlobalPrefix('nest-allies')
+    // app.setGlobalPrefix('api')
 
     // 配置swagger
     const options = new DocumentBuilder()

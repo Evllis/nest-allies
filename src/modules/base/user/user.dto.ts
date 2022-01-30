@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator'
+import { IsNotEmpty, IsString, IsOptional } from 'class-validator'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
 export class LoginInfo {
@@ -14,12 +14,13 @@ export class LoginInfo {
 export class RegisterInfo {
     @ApiProperty()
     @IsNotEmpty({ message: '用户名不能为空' })
-    readonly accountName: string | number
+    readonly username: string | number
 
-    @ApiProperty()
-    @IsNotEmpty({ message: '真实姓名不能为空' })
+    @ApiPropertyOptional({ description: '真实姓名' })
+    @IsOptional()
+    // @IsNotEmpty({ message: '真实姓名不能为空' })
     @IsString({ message: '真实姓名必须是字符串类型' })
-    readonly realName: string
+    readonly realname?: string
 
     @ApiProperty()
     @IsNotEmpty({ message: '密码不能为空' })
@@ -31,7 +32,7 @@ export class RegisterInfo {
 
     @ApiProperty()
     @IsNotEmpty({ message: '手机号不能为空' })
-    @IsNumber()
+    @IsString()
     readonly mobile: string
 
     // ApiPropertyOptional 可选参数装饰器

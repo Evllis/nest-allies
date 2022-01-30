@@ -14,12 +14,12 @@ export class UserService {
     async findOne(username: string): Promise<any | undefined> {
         const sql = `
             SELECT
-                user_id userID, account_name username, real_name realName, passwd password,
+                user_id userID, user_name username, real_name realname, passwd password,
                 passwd_salt salt, mobile, role
             FROM
                 admin_user
             WHERE
-                account_name = '${username}'
+                user_name = '${username}'
         `
         try {
             const user = (
@@ -40,14 +40,14 @@ export class UserService {
      * 注册用户
      */
     async register(requestBody: any): Promise<any> {
-        const { accountName, realName, password, repassword, mobile, role = 3 } = requestBody
+        const { username, realname = '', password, repassword, mobile, role = 3 } = requestBody
         if (password !== repassword) {
             return {
                 code: 400,
                 message: '两次密码输入不一致'
             }
         }
-        const user = await this.findOne(accountName)
+        const user = await this.findOne(username)
         if (user) {
             return {
                 code: 400,
@@ -58,16 +58,16 @@ export class UserService {
         const hashPwd = encryptoPassword(password, salt)
         const registerSQL = `
             INSERT INTO admin_user
-                (account_name, real_name, passwd, passwd_salt, mobile, role, user_status, create_by)
+                (user_name, real_name, passwd, passwd_salt, mobile, role, user_status, create_by)
             VALUES
-                ('${accountName}', '${realName}', '${hashPwd}', '${salt}', '${mobile}', '${role}', 1, 0)
+                ('${username}', '${realname}', '${hashPwd}', '${salt}', '${mobile}', '${role}', 1, 0)
         `
         try {
             await sequelize.query(registerSQL, {
                 logging: false
             })
             return {
-                code: 200,
+                code: 0,
                 message: 'Success'
             }
         } catch (err) {

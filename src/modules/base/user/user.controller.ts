@@ -1,5 +1,5 @@
-import { Controller, Post, Body, UseGuards, UsePipes } from '@nestjs/common'
-import { AuthGuard } from '@nestjs/passport'
+import { Controller, Post, Body, /* UseGuards, */ UsePipes } from '@nestjs/common'
+// import { AuthGuard } from '@nestjs/passport'
 import { UserService } from './user.service'
 import { AuthService } from '/@/modules/common/auth/auth.service'
 import { ValidationPipe } from '/@/pipe/validation.pipe'
@@ -45,7 +45,7 @@ export class UserController {
     }
 
     // 使用JWT进行验证
-    @UseGuards(AuthGuard('jwt'))
+    // @UseGuards(AuthGuard('jwt'))
     @UsePipes(new ValidationPipe())
     @Post('register')
     async register(@Body() body: RegisterInfo) {
