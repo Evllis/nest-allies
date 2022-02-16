@@ -1,9 +1,9 @@
-import { Controller, Post, Body, /* UseGuards, */ UsePipes } from '@nestjs/common'
-// import { AuthGuard } from '@nestjs/passport'
+import { Controller, Get, Post, Query, Body, HttpCode, UseGuards, UsePipes } from '@nestjs/common'
+import { AuthGuard } from '@nestjs/passport'
 import { UserService } from './user.service'
 import { AuthService } from '/@/modules/common/auth/auth.service'
 import { ValidationPipe } from '/@/pipe/validation.pipe'
-import { RegisterInfo, LoginInfo } from './user.dto'
+import { RegisterInfo, LoginInfo, GetInfo } from './user.dto'
 import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger'
 
 // Swagger JWT验证
@@ -14,18 +14,23 @@ import { ApiTags, ApiBearerAuth, ApiBody } from '@nestjs/swagger'
 export class UserController {
     constructor(private readonly userService: UserService, private readonly authService: AuthService) {}
 
-    @Post('find-one')
-    findOne(@Body() body: LoginInfo) {
-        return this.userService.findOne(body.username)
+    @UseGuards(AuthGuard('jwt'))
+    @UsePipes(new ValidationPipe())
+    @Get('getUserInfo')
+    @HttpCode(200)
+    async getUserInfo(@Query() query: GetInfo) {
+        return await this.userService.getUserInfo(query.username)
     }
 
     // 使用JWT进行验证
     // @UseGuards(AuthGuard('jwt'))
+    @UsePipes(new ValidationPipe())
     @Post('login')
     @ApiBody({
         description: '用户登录',
         type: LoginInfo
     })
+    @HttpCode(200)
     async login(@Body() loginParams: LoginInfo) {
         const authResult = await this.authService.validateUser(loginParams.username, loginParams.password)
         switch (authResult.code) {
@@ -48,6 +53,7 @@ export class UserController {
     // @UseGuards(AuthGuard('jwt'))
     @UsePipes(new ValidationPipe())
     @Post('register')
+    @HttpCode(200)
     async register(@Body() body: RegisterInfo) {
         return await this.userService.register(body)
     }

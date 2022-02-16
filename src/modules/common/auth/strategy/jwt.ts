@@ -7,8 +7,11 @@ import { jwtConstants } from '../constants'
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor() {
         super({
+            // 配置从头信息里获取token
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            // 忽略过期: false
             ignoreExpiration: false,
+            // secret必须与签发jwt的secret一样
             secretOrKey: jwtConstants.secret
         })
     }

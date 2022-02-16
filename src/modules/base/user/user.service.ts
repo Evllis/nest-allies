@@ -11,7 +11,7 @@ export class UserService {
      * @param { String } username 用户名
      * @return { Promise<any | undefined> }
      */
-    async findOne(username: string): Promise<any | undefined> {
+    async getUserInfo(username: string): Promise<any | undefined> {
         const sql = `
             SELECT
                 user_id userID, user_name username, real_name realname, passwd password,
@@ -29,10 +29,16 @@ export class UserService {
                     logging: false // 是否将SQL语句打印到控制台
                 })
             )[0]
-            return user
+            return {
+                code: 0,
+                result: user,
+                message: '查询成功'
+            }
         } catch (err) {
-            console.error(err)
-            return void 0
+            return {
+                code: 600,
+                message: JSON.stringify(err)
+            }
         }
     }
 
@@ -42,16 +48,18 @@ export class UserService {
     async register(requestBody: any): Promise<any> {
         const { username, realname = '', password, repassword, mobile, role = 3 } = requestBody
         if (password !== repassword) {
+            // 两次密码输入不一致
             return {
                 code: 400,
-                message: '两次密码输入不一致'
+                message: 'sys.api.registerPasswordDifferent'
             }
         }
-        const user = await this.findOne(username)
+        const user = await this.getUserInfo(username)
         if (user) {
+            // 用户已存在
             return {
                 code: 400,
-                message: '用户已经存在'
+                message: 'sys.api.registerErrorAccountExist'
             }
         }
         const salt = makeSalt()
@@ -60,7 +68,7 @@ export class UserService {
             INSERT INTO admin_user
                 (user_name, real_name, passwd, passwd_salt, mobile, role, user_status, create_by)
             VALUES
-                ('${username}', '${realname}', '${hashPwd}', '${salt}', '${mobile}', '${role}', 1, 0)
+                ('${username}', '${realname || mobile}', '${hashPwd}', '${salt}', '${mobile}', '${role}', 1, 0)
         `
         try {
             await sequelize.query(registerSQL, {
@@ -68,12 +76,12 @@ export class UserService {
             })
             return {
                 code: 0,
-                message: 'Success'
+                message: 'sys.api.registerSuccess'
             }
         } catch (err) {
             return {
                 code: 503,
-                message: `Service error: ${err}`
+                message: 'sys.api.apiRequestFailed'
             }
         }
     }

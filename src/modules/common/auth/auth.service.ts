@@ -15,17 +15,17 @@ export class AuthService {
      * @returns { Promise<any> }
      */
     async validateUser(username: string, password: string): Promise<any> {
-        const user = await this.userService.findOne(username)
-        if (user) {
-            const hashPassword = user.password
-            const salt = user.salt
+        const data = await this.userService.getUserInfo(username)
+        if (!data.code) {
+            const hashPassword = data.result.password
+            const salt = data.result.salt
             // 通过密码盐, 加密传参, 再与数据库里的进行比较, 判断是否相等
             const hashedPassword = encryptoPassword(password, salt)
             if (hashPassword === hashedPassword) {
                 // 密码正确
                 return {
                     code: 1,
-                    user
+                    user: data.result
                 }
             } else {
                 // 密码错误
@@ -54,15 +54,15 @@ export class AuthService {
             // 将用户信息和 token 存入 redis, 并设置失效时间, 语法: [key, seconds, value]
             await redis.setex(`${user.userID}-${user.username}`, 300, `${token}`)
             return {
-                code: 200,
-                data: {
+                code: 0,
+                result: {
                     token
                 },
                 message: `登录成功`
             }
         } catch (err) {
             return {
-                code: 600,
+                code: 1,
                 message: `账号或密码错误`
             }
         }
